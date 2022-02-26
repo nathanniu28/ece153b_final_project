@@ -1,0 +1,9 @@
+Project Update - 2/25/22
+
+There are five main functionalities that I must implement in my project: interfacing with the voltaile FRAM unit using I2C; interfacing with the OLED display using SPI; interfacing with a connected computer using UART; reading input from user button presses; and the game logic itself. Integrating all the parts of the project together will be another task.
+
+The UART functionality is one of the easiest to implement, since it only requires minor modifications to the code in Part A of Lab 4. Interfacing with the external buttons will also be easy to implement, as it only requires some initialization of GPIO ports and a quick setup of some interrupt protocols. These two elements are so simple that I have cosen to focus on the other elements of the project first.
+
+Implementing the game logic is not inherently difficult, but will take time to make sure that the game works correctly. Howver, my biggest worries are with interacting with the volatile FRAM and OLED display elements. I believed that implementing the SPI protocol for interacting with the OLED display would be most difficult, thus I chose to focus on implementing a functional SPI protocol first.
+
+This week I have been researching documentation about my OLED display module and how to interface with it using SPI. I have copied over some of the files from previous labs to use as starter code for implementing the rest of the project. I have wired the OLED display to the Nucleo-64 microcontroller. I am learning how the microcontroller interacts with the product, such as what SPI specifications are necessary to allow the display and microcontrolelr to communicate, and what data I need to write in order to get the right LEDS to light up.
