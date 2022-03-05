@@ -1,0 +1,9 @@
+Project Update - 3/4/22
+
+I haven't made as much progress as I would have liked this past week, but I have gotten a majority of the code layout planned out. All of the code is organized based on their purpose.
+
+The SPI protocol is partially implemented, but getting it to work with the OLED display correctly was a little complicated, so I decided to focus on working on the other aspects of the project.
+
+I added the basis for the game logic to the code. Player movement is done through external button interrupts. Player movement is faster than enemy movement and enemy projectile movement. Enemy and enemy projectile movement is controlled via a delay function that uses the SysTick_Handler function. This delay function controls the flow of the game. Enemy informaiton is stored in a custom struct array. Each element in the array stores information about the enemy's position and whether or not it has been eliminated by the player. Information about the player is also stored in a custom struct that stores the player's position. Eventually I will add game logic that allows the enemy to drop bombs on the player.
+
+The UART protocol has already been implemented, and the button interrupts are nearly implemented as well. Finishing the SPI protocol interaction with the OLED display is the next priority, followed by finishing the game logic and interacting with the volatile FRAM using I2C.
