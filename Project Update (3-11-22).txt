@@ -1,0 +1,7 @@
+Project Update - 3/11/22
+
+I have nearly fully implemented the SPI protocol for the OLED display. Perfecting the code for the OLED display has proven to be difficult, as it is hard to find where errors in my code are originating from. However, once the display is up and running, it is very simple to write to it, as one only needs to input the x and y coordinates of each pixel on the display to draw to that pixel. Since all game elements are stored in a matrix, simply iterating over the matrix and using the DrawPixel() command each time is enough to completely update the entire OLED display each cycle.
+
+The game code is nearly complete as well, and I am waiting for the OLED display to fully work so that I can test its playability. Usually a game only ends when the player gets hit by an enemy projectile. However, to test the "game over" functionality, I have added a simple timer instead. Once the timer reaches zero, the game will end and the score reached will be displayed.
+
+I have been keeping each of the code modules separate up to this point so that I can verify that each of them is functioning correctly before cobbling the code all together. One of my last steps is to implement the I2C functionality to send and receive data from the volatile FRAM. I also would like to see if I can increase the functionality of the UART interaction with the computer terminal by adding the ability for the player to start the game from the terminal (instead of the game immediately starting upon activating the STM32 microcontroller) among other game options.
