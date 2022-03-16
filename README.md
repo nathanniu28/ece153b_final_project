@@ -1,4 +1,4 @@
-# ece153b_final_project
+# Modified Space Invaders
 
 Link to Demo Video
 ------------------
