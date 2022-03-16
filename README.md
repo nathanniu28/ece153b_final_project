@@ -1,8 +1,23 @@
 # Modified Space Invaders
-
 Link to Demo Video
 ------------------
 https://drive.google.com/file/d/1ntdhyYIeoqYiXOmBLCjAyKm-eCet7k1G/view?usp=sharing
+
+Explanation of Project Functionality
+====================================
+
+The Modified Space Invaders project has four basic interactions: communicating with the computer terminal through UART, communicating to the Volatile FRAM using I2C, commuincating with the OLED Display using SPI, and reading in user button presses using external interupts. All computation for the game is done in the microcontroller.
+
+The game itself is meant to be displayed on the OLED Display. Unfortunately, the code for activating the OLED SPI through SPI is non-oeprable. While the SPI operation itself works, I could not get the OLED Display to turn on. Thus, the responsibility of displaying the game is given to the computer instead using the Termite RS232 terminal. Due to using UART to transfer data, the game has low framerate and stutters a bit. The game is also displayed using ASCII character. However, this setup still works.
+
+The game opens up on a basic menu screen. Pressing the "h" key will take the user to the leaderboards screen. Pressing any key will take the user back to the menu screen. From the menu screen, the game can be activated by pressing key. Once the game starts, the screen will display several rows of aliens shifting left and right. The player will be located at the bottom. The two blue buttons on the breadboard connected to the microcontroller control left and right movement. The red button allows the player to shoot projectiles at the aliens. The aliens move once every second. The projectiles move three times as fast. The timing of these movements is determined by SysTick interupts. The movement of the player is determined by button interrupts, and is thus independent of the speed of the rest of the game.
+
+In normal Space Invaders, the game ends once the aliens reach the bottom of the screen or if the player is hit by an enemy projectile. However in this case, the aliens do not fire back and do not move down the screen. Thus, a 20 second timer is put in place that will end the game once it reaches zero. The player thus attempts to get as many points as possible in the time frame. Points are won when a projectile hits an enemy. For each succesful hit, the player gets 20 points and the alien hit dissapears.
+
+After the game is over, the player's score is displayed and the player is asked to input their intials using the keyboard. Once inputted, the player is shown the leaderboards. All data about highscores is stored in the Volatile FRAM. Each entry consists of 4 bytes: 1 byte for each  of 3 initials, and 1 byte for the score itself. The Space Invaders program only stores 5 entries in the FRAM at a time. Once a game is won, the game attempts to insert the players score into the FRAM. If all entries are full, the game replaces the smallest score with the players score (if the players score is high enough). Then, the player can hit any key to return to the start menu. From there, the player can choose to begin the game again and try for a new high score.
+
+Weekly Progress Updates
+=======================
 
 Project Update - 3/11/22
 ------------------------
@@ -34,6 +49,9 @@ The UART functionality is one of the easiest to implement, since it only require
 Implementing the game logic is not inherently difficult, but will take time to make sure that the game works correctly. Howver, my biggest worries are with interacting with the volatile FRAM and OLED display elements. I believed that implementing the SPI protocol for interacting with the OLED display would be most difficult, thus I chose to focus on implementing a functional SPI protocol first.
 
 This week I have been researching documentation about my OLED display module and how to interface with it using SPI. I have copied over some of the files from previous labs to use as starter code for implementing the rest of the project. I have wired the OLED display to the Nucleo-64 microcontroller. I am learning how the microcontroller interacts with the product, such as what SPI specifications are necessary to allow the display and microcontrolelr to communicate, and what data I need to write in order to get the right LEDS to light up.
+
+Proposal
+========
 
 Overview
 --------
