@@ -4,32 +4,14 @@ Link to Demo Video
 ------------------
 https://drive.google.com/file/d/1ntdhyYIeoqYiXOmBLCjAyKm-eCet7k1G/view?usp=sharing
 
-<iframe src="https://drive.google.com/file/d/1m1Z0ijzdyXFdg_p_4nkP1-PgSGQ83spO/preview" width="640" height="480" allow="autoplay"></iframe>
-
-<!DOCTYPE html>
-<html>
-<body>
-  
-  <iframe src="https://drive.google.com/file/d/1m1Z0ijzdyXFdg_p_4nkP1-PgSGQ83spO/preview" width="640" height="480" allow="autoplay"></iframe>
-  
-  <!--aloow full screen add tag -->
-  
-<iframe allowfullscreen="allowfullscreen" src="https://drive.google.com/file/d/1m1Z0ijzdyXFdg_p_4nkP1-PgSGQ83spO/preview" ></iframe>
-
-</body>
-</html>
-
-
-Project Update - 2/25/22
+Project Update - 3/11/22
 ------------------------
 
-There are five main functionalities that I must implement in my project: interfacing with the voltaile FRAM unit using I2C; interfacing with the OLED display using SPI; interfacing with a connected computer using UART; reading input from user button presses; and the game logic itself. Integrating all the parts of the project together will be another task.
+I have nearly fully implemented the SPI protocol for the OLED display. Perfecting the code for the OLED display has proven to be difficult, as it is hard to find where errors in my code are originating from. However, once the display is up and running, it is very simple to write to it, as one only needs to input the x and y coordinates of each pixel on the display to draw to that pixel. Since all game elements are stored in a matrix, simply iterating over the matrix and using the DrawPixel() command each time is enough to completely update the entire OLED display each cycle.
 
-The UART functionality is one of the easiest to implement, since it only requires minor modifications to the code in Part A of Lab 4. Interfacing with the external buttons will also be easy to implement, as it only requires some initialization of GPIO ports and a quick setup of some interrupt protocols. These two elements are so simple that I have cosen to focus on the other elements of the project first.
+The game code is nearly complete as well, and I am waiting for the OLED display to fully work so that I can test its playability. Usually a game only ends when the player gets hit by an enemy projectile. However, to test the "game over" functionality, I have added a simple timer instead. Once the timer reaches zero, the game will end and the score reached will be displayed.
 
-Implementing the game logic is not inherently difficult, but will take time to make sure that the game works correctly. Howver, my biggest worries are with interacting with the volatile FRAM and OLED display elements. I believed that implementing the SPI protocol for interacting with the OLED display would be most difficult, thus I chose to focus on implementing a functional SPI protocol first.
-
-This week I have been researching documentation about my OLED display module and how to interface with it using SPI. I have copied over some of the files from previous labs to use as starter code for implementing the rest of the project. I have wired the OLED display to the Nucleo-64 microcontroller. I am learning how the microcontroller interacts with the product, such as what SPI specifications are necessary to allow the display and microcontrolelr to communicate, and what data I need to write in order to get the right LEDS to light up.
+I have been keeping each of the code modules separate up to this point so that I can verify that each of them is functioning correctly before cobbling the code all together. One of my last steps is to implement the I2C functionality to send and receive data from the volatile FRAM. I also would like to see if I can increase the functionality of the UART interaction with the computer terminal by adding the ability for the player to start the game from the terminal (instead of the game immediately starting upon activating the STM32 microcontroller) among other game options.
 
 Project Update - 3/4/22
 ------------------------
@@ -42,11 +24,34 @@ I added the basis for the game logic to the code. Player movement is done throug
 
 The UART protocol has already been implemented, and the button interrupts are nearly implemented as well. Finishing the SPI protocol interaction with the OLED display is the next priority, followed by finishing the game logic and interacting with the volatile FRAM using I2C.
 
-Project Update - 3/11/22
+Project Update - 2/25/22
 ------------------------
 
-I have nearly fully implemented the SPI protocol for the OLED display. Perfecting the code for the OLED display has proven to be difficult, as it is hard to find where errors in my code are originating from. However, once the display is up and running, it is very simple to write to it, as one only needs to input the x and y coordinates of each pixel on the display to draw to that pixel. Since all game elements are stored in a matrix, simply iterating over the matrix and using the DrawPixel() command each time is enough to completely update the entire OLED display each cycle.
+There are five main functionalities that I must implement in my project: interfacing with the voltaile FRAM unit using I2C; interfacing with the OLED display using SPI; interfacing with a connected computer using UART; reading input from user button presses; and the game logic itself. Integrating all the parts of the project together will be another task.
 
-The game code is nearly complete as well, and I am waiting for the OLED display to fully work so that I can test its playability. Usually a game only ends when the player gets hit by an enemy projectile. However, to test the "game over" functionality, I have added a simple timer instead. Once the timer reaches zero, the game will end and the score reached will be displayed.
+The UART functionality is one of the easiest to implement, since it only requires minor modifications to the code in Part A of Lab 4. Interfacing with the external buttons will also be easy to implement, as it only requires some initialization of GPIO ports and a quick setup of some interrupt protocols. These two elements are so simple that I have cosen to focus on the other elements of the project first.
 
-I have been keeping each of the code modules separate up to this point so that I can verify that each of them is functioning correctly before cobbling the code all together. One of my last steps is to implement the I2C functionality to send and receive data from the volatile FRAM. I also would like to see if I can increase the functionality of the UART interaction with the computer terminal by adding the ability for the player to start the game from the terminal (instead of the game immediately starting upon activating the STM32 microcontroller) among other game options.
+Implementing the game logic is not inherently difficult, but will take time to make sure that the game works correctly. Howver, my biggest worries are with interacting with the volatile FRAM and OLED display elements. I believed that implementing the SPI protocol for interacting with the OLED display would be most difficult, thus I chose to focus on implementing a functional SPI protocol first.
+
+This week I have been researching documentation about my OLED display module and how to interface with it using SPI. I have copied over some of the files from previous labs to use as starter code for implementing the rest of the project. I have wired the OLED display to the Nucleo-64 microcontroller. I am learning how the microcontroller interacts with the product, such as what SPI specifications are necessary to allow the display and microcontrolelr to communicate, and what data I need to write in order to get the right LEDS to light up.
+
+Overview
+--------
+A basic version of the popular arcade game “Space Invaders” will be implemented using the STM32L476RG microcontroller. In this game, swarms of enemy “invaders” move in from the top of the screen and slowly move towards the bottom. A player sprite exists at the bottom of the screen. A user can control a sprite in the game using a two buttons, one for leftward movement and one for rightward movement. A third button will allow the sprite to “fire” projectiles at enemies. If enemies are shot, they dissapear from the screen. The game ends once the 20 second timer runs out. After the game ends, the player’s score will be displayed, and the user will be asked to input their initials using a keyboard. The keyboard is also used to start the game from the start menu.
+
+Peripherals
+-----------
+- 128x64 OLED Graphic Display
+- Push Buttons
+- Non-Volatile FRAM
+- Computer Terminal + Keyboard (Optional)
+
+Serial Interface Protocols
+--------------------------
+- UART
+- I2C
+- SPI
+
+Software Structure
+------------------
+The logic used to run the game “Space Invaders” will be coded in C and run inside the STM32 microcontroller. A 2D matrix will be used to represent the position of the enemies in the game. A main loop will periodically move the enemies across and down the screen. User input will be detected using polling. Player movement speed and shooting speed should be independent of enemy movement speed. The buttons will be connected through two of the microntroller’s I/O ports. Interrupts will be used to allow the buttons to control player movement. The game will communicate with the OLED display using SPI protocols, and will store data in the FRAM using I2C protocols. When a computer terminal is connected, the game will interact with the Termite program using UART protocols.
